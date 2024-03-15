@@ -1,0 +1,16 @@
+services:
+  mariadb:
+    # image: ./requirements/mariadb/
+    build: ./requirements/mariadb
+    volumes:
+      - db-data:/home/psalame/db-data/
+    networks:
+      - network
+
+volumes:
+  db-data:
+  wordpress-data:
+
+
+networks:
+  network: {}
