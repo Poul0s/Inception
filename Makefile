@@ -13,7 +13,4 @@ up:
 down:
 	docker-compose --file $(FILE_PATH) down
 
-reset:
-	docker system prune -af
-
-.PHONY: all build up down reset
+.PHONY: all build up down

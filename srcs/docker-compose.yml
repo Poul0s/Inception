@@ -10,7 +10,7 @@ services:
       - db-data:/var/lib/mysql
     networks:
       - network
-    restart: always
+    restart: on-failure
     expose:
       - 3306
   
@@ -27,7 +27,7 @@ services:
       - wordpress-data:/var/www/html
     networks:
       - network
-    restart: always
+    restart: on-failure
     expose:
       - 9000
   
@@ -44,7 +44,7 @@ services:
       - wordpress-data:/var/www/html
     networks:
       - network
-    restart: always
+    restart: on-failure
     ports:
       - "443:443"
 
@@ -63,4 +63,6 @@ volumes:
       o: bind
 
 networks:
-  network: {}
+  network: {
+    driver: bridge
+  }

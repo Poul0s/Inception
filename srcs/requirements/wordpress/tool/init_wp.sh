@@ -2,22 +2,23 @@
 
 cd /var/www/html/wordpress
 
+while ! mariadb -h mariadb -u$MYSQL_USER -p$MYSQL_PASSWORD <<< "SHOW databases;" &>/dev/null; do
+	echo "waiting for mariadb"
+	sleep 1
+done
+
 if [ ! -f wp-config.php ]; then
-	echo > wp-config.php << EOF
-	<?php
-		define('DB_NAME', '${MYSQL_DATABASE}');
-		define('DB_USER', '${MYSQL_USER}');
-		define('DB_PASSWORD', '${MYSQL_PASSWORD}');
-		define('DB_HOST', 'mariadb:3306');
-		define('DB_CHARSET', 'utf8');
-		define('DB_COLLATE', '');
-		$table_prefix = 'wp_';
-		define('WP_DEBUG', false);
-		if ( !defined('ABSPATH') )
-			define('ABSPATH', dirname(__FILE__) . '/');
-		require_once(ABSPATH . 'wp-settings.php');
-EOF
-	echo "Wordpress config céée.";
+	wp --allow-root config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=mariadb --debug=true
+	echo "config created"
 fi
+
+
+if ! wp --allow-root core is-installed &>/dev/null; then
+	wp --allow-root core multisite-install --url=$DOMAIN_NAME --title=SiteBanale --admin_user=$ADMIN_ID --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_MAIL
+	echo "admin user created"
+	wp --allow-root user create $DEF_USER_ID $DEF_USER_MAIL --user_pass=$DEF_USER_PASSWORD
+	echo "default user created"
+fi
+
 
 $@
