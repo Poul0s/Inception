@@ -1,5 +1,15 @@
 FROM debian:bookworm
 
-RUN apt update && apt install -y mariadb-server
+RUN apt update && apt full-upgrade && apt install -y mariadb-server
 
-CMD [ "mariadb", "--no-daemon" ]
+COPY conf/mariadb.conf /etc/mysql/mariadb.conf.d/50-server.cnf
+
+COPY tool/init_db.sh /usr/bin/init_db.sh
+
+RUN chmod +x /usr/bin/init_db.sh
+
+EXPOSE 3306
+
+ENTRYPOINT ["/usr/bin/init_db.sh"]
+
+CMD ["mysqld_safe"]

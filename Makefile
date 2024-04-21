@@ -3,12 +3,17 @@ FILE_PATH="srcs/docker-compose.yml"
 all: build up
 
 build:
-	sudo docker compose --file $(FILE_PATH) build
+	docker-compose --file $(FILE_PATH) build
 
 up:
-	sudo docker compose --file $(FILE_PATH) up
+	mkdir -p ~/db-data
+	mkdir -p ~/wordpress-data
+	docker-compose --file $(FILE_PATH) up
 
 down:
-	sudo docker compose --file $(FILE_PATH) down
+	docker-compose --file $(FILE_PATH) down
 
-.PHONY: all build up down
+reset:
+	docker system prune -af
+
+.PHONY: all build up down reset
