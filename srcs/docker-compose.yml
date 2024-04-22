@@ -13,6 +13,17 @@ services:
     restart: on-failure
     expose:
       - 3306
+
+  redis:
+    container_name: redis
+    build:
+      context: ./requirements/bonus/redis
+      dockerfile: Dockerfile
+    networks:
+      - network
+    restart: on-failure
+    expose:
+      - 6379
   
   wordpress:
     container_name: wordpress
@@ -20,6 +31,7 @@ services:
       - .env
     depends_on:
       - mariadb
+      - redis
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
@@ -30,6 +42,23 @@ services:
     restart: on-failure
     expose:
       - 9000
+
+  adminer:
+    container_name: adminer
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    build:
+      context: ./requirements/bonus/adminer
+      dockerfile: Dockerfile
+    networks:
+      - network
+    volumes:
+      - wordpress-data:/var/www/html
+    restart: on-failure
+    expose:
+      - 9000
   
   nginx:
     container_name: nginx
@@ -37,6 +66,7 @@ services:
       - .env
     depends_on:
       - wordpress
+      - adminer
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
@@ -47,6 +77,24 @@ services:
     restart: on-failure
     ports:
       - "443:443"
+  
+  ftp:
+    container_name: ftp
+    env_file:
+      - .env
+    depends_on:
+      - wordpress
+    build:
+      context: ./requirements/bonus/ftp
+      dockerfile: Dockerfile
+    volumes:
+      - wordpress-data:/var/www/html
+    networks:
+      - network
+    restart: on-failure
+    ports:
+      - "20:20"
+      - "21:21"
 
 volumes:
   db-data:
