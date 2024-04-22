@@ -95,6 +95,19 @@ services:
     ports:
       - "20:20"
       - "21:21"
+  
+  eleventy:
+    container_name: eleventy
+    build:
+      context: ./requirements/bonus/eleventy
+      dockerfile: Dockerfile
+    volumes:
+      - wordpress-data:/var/www/html
+    networks:
+      - network
+    restart: on-failure
+    ports:
+      - "8080:8080"
 
 volumes:
   db-data:
