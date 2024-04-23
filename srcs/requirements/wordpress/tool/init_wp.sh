@@ -1,5 +1,12 @@
 #!/bin/bash
 
+
+if [ ! -d /var/www/html/wordpress ]; then
+	wp --allow-root core download --path=/var/www/html/wordpress
+	echo "Downloaded wordpress"
+	ls -la /var/www/html
+fi
+
 cd /var/www/html/wordpress
 
 while ! mariadb -h mariadb -u$MYSQL_USER -p$MYSQL_PASSWORD <<< "SHOW databases;" &>/dev/null; do
@@ -9,10 +16,10 @@ done
 
 if [ ! -f wp-config.php ]; then
 	wp --allow-root config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=mariadb
-	wp --allow-root config set WP_CACHE true --raw
-	wp --allow-root config set WP_CACHE_KEY_SALT "$DOMAIN_NAME"
 fi
 
+wp --allow-root config set WP_CACHE true --raw
+wp --allow-root config set WP_CACHE_KEY_SALT "$DOMAIN_NAME"
 
 if ! wp --allow-root core is-installed &>/dev/null; then
 	wp --allow-root core multisite-install --url=$DOMAIN_NAME --title=SiteBanale --admin_user=$ADMIN_ID --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_MAIL

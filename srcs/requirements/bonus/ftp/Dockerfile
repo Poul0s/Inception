@@ -1,6 +1,6 @@
 FROM debian:bookworm
 
-RUN apt update && apt full-upgrade && apt install -y vsftpd
+RUN apt update -y && apt full-upgrade -y && apt install -y vsftpd
 
 COPY conf/vsftpd.conf /etc/vsftpd.conf
 

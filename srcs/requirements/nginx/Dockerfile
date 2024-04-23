@@ -1,6 +1,6 @@
 FROM debian:bookworm
 
-RUN apt update && apt full-upgrade && apt install -y nginx openssl
+RUN apt update -y && apt full-upgrade -y && apt install -y nginx openssl
 
 RUN mkdir -p /etc/nginx/ssl /var/run/nginx
 

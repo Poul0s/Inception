@@ -114,13 +114,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/thunlos/db-data
+      device: /home/psalame/db-data
       o: bind
   wordpress-data:
     driver: local
     driver_opts:
       type: none
-      device: /home/thunlos/wordpress-data
+      device: /home/psalame/wordpress-data
       o: bind
 
 networks:
