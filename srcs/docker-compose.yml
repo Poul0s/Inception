@@ -96,10 +96,10 @@ services:
       - "20:20"
       - "21:21"
   
-  eleventy:
-    container_name: eleventy
+  pong:
+    container_name: pong
     build:
-      context: ./requirements/bonus/eleventy
+      context: ./requirements/bonus/pong
       dockerfile: Dockerfile
     volumes:
       - wordpress-data:/var/www/html
@@ -108,6 +108,15 @@ services:
     restart: on-failure
     ports:
       - "8080:8080"
+  
+  squid:
+    container_name: squid
+    build:
+      context: ./requirements/bonus/squid
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "8888:8888"
 
 volumes:
   db-data:

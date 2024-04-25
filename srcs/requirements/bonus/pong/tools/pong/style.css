@@ -1,0 +1,43 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#title {
+	position: relative;
+	text-align: center;
+	width: 100%;
+}
+
+#pongContainer {
+	position: relative;
+	display: block;
+	background-color: rgb(120, 120, 120);
+	width: 100%;
+}
+
+.bar {
+	position: absolute;
+	width: 1vh;
+	height: 10vh;
+	background-color: rgb(255, 0, 0);
+	top: 50%;
+}
+
+#barLeft {
+	left: 0;
+}
+
+#barRight {
+	right: 0;
+}
+
+#ball {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	background: rgb(255, 255, 255);
+	width: 1vh;
+	height: 1vh;
+	border-radius: 50%;
+}

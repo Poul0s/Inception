@@ -3,7 +3,7 @@ FILE_PATH="srcs/docker-compose.yml"
 all: build up
 
 build:
-	docker-compose --file $(FILE_PATH) build
+	docker-compose --file $(FILE_PATH) build --parallel
 
 up:
 	mkdir -p ~/db-data
