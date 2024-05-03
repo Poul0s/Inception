@@ -123,13 +123,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/psalame/db-data
+      device: /home/psalame/data/mariadb
       o: bind
   wordpress-data:
     driver: local
     driver_opts:
       type: none
-      device: /home/psalame/wordpress-data
+      device: /home/psalame/data/wordpress
       o: bind
 
 networks:

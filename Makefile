@@ -6,8 +6,8 @@ build:
 	docker-compose --file $(FILE_PATH) build --parallel
 
 up:
-	mkdir -p ~/db-data
-	mkdir -p ~/wordpress-data
+	mkdir -p ~/data/wordpress
+	mkdir -p ~/data/wordpress
 	docker-compose --file $(FILE_PATH) up
 
 down:
